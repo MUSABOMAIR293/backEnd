@@ -1,7 +1,8 @@
 package Final_Pro.example.BackEnd.Entity;
-import jakarta.persistence.*;
+
 import org.springframework.data.annotation.CreatedDate;
 
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity

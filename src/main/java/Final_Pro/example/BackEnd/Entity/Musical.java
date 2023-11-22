@@ -1,7 +1,8 @@
 package Final_Pro.example.BackEnd.Entity;
 
 
-import jakarta.persistence.*;
+import javax.persistence.*;
+
 @Entity
 @Table(name = "Musical")
 public class Musical {
@@ -16,6 +17,7 @@ public class Musical {
     private String dataCrate;
 
     private String describeText;
+
 
     @ManyToOne
     @JoinColumn(name = "user_id")

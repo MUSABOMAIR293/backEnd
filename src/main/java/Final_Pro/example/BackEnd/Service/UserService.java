@@ -1,35 +1,59 @@
 package Final_Pro.example.BackEnd.Service;
 
-
-
 import Final_Pro.example.BackEnd.Entity.User;
+import Final_Pro.example.BackEnd.Repository.RoleRepository;
 import Final_Pro.example.BackEnd.Repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Service
-public class UserService {
+@Slf4j
+public class UserService implements  UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
 
-    public User saveUser(User user) {
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private RoleRepository roleRepository;
+
+    public User saveUser(User userSignupDTO) {
+        log.info("Saving a new user {} inside of the database", userSignupDTO.getName());
+        User user = new User(userSignupDTO.getName(), userSignupDTO.getEmail(), userSignupDTO.getPassword());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
-
-    public List<User> getUser(User user){
-        return  userRepository.findAll();
+    public List<User> getUsers() {
+        log.info("Fetching all users");
+        return userRepository.findAll();
     }
 
-    public void deleteUserById (int id_user){
-            userRepository.deleteById(id_user);
-    }
-
-    public Optional<User> getUserDtails( int id_user ){
-        return userRepository.findById(id_user);
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            log.error("User not found in the database");
+            throw new UsernameNotFoundException("User not found in the database");
+        } else {
+            log.info("User is found in the database: {}", email);
+            Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+            user.getRoles().forEach(role -> {
+                authorities.add(new SimpleGrantedAuthority(role.getName()));
+            });
+            return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
+        }
     }
 }
