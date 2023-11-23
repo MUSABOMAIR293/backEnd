@@ -50,7 +50,7 @@
 
 
 2 - Trello
-(https://trello.com/b/mKt5wI4g/final-project)
+(https://trello.com/invite/b/mKt5wI4g/ATTI213c5d7b86942dc6b0159c1c8ba141f152497B69/final-project)
 
 
 

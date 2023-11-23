@@ -16,6 +16,11 @@ public class MusicalController {
         return musicalService.saveMusical(musical);
     }
 
+    @PostMapping("/Update")
+    public Musical UpdateMusical(@RequestBody Musical musical){
+        return  musicalService.saveMusical(musical);
+    }
+
     @GetMapping("/showAllMusical")
     public List<Musical> getMusical(Musical musical){
         return  musicalService.getMusical(musical);

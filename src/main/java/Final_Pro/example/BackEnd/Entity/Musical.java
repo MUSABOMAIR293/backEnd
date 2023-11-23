@@ -12,6 +12,7 @@ public class Musical {
     private int mu_id;
 
 
+    private String img;
     private String nameTools;
 
     private String dataCrate;
@@ -22,8 +23,6 @@ public class Musical {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-    public Musical() {
-    }
 
     public int getMu_id() {
         return mu_id;
@@ -31,6 +30,14 @@ public class Musical {
 
     public void setMu_id(int mu_id) {
         this.mu_id = mu_id;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 
     public String getNameTools() {
@@ -49,22 +56,31 @@ public class Musical {
         this.dataCrate = dataCrate;
     }
 
-    public String getDescribe() {
+    public String getDescribeText() {
         return describeText;
     }
 
-    public void setDescribe(String describe) {
-        this.describeText = describe;
+    public void setDescribeText(String describeText) {
+        this.describeText = describeText;
     }
 
+    public User getUser() {
+        return user;
+    }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
 
+    public Musical() {
+    }
 
-
-    public Musical(int mu_id, String nameTools, String dataCrate, String describeText) {
+    public Musical(int mu_id, String img, String nameTools, String dataCrate, String describeText, User user) {
         this.mu_id = mu_id;
+        this.img = img;
         this.nameTools = nameTools;
         this.dataCrate = dataCrate;
         this.describeText = describeText;
+        this.user = user;
     }
 }

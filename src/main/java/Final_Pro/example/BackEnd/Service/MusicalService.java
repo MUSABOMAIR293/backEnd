@@ -16,6 +16,10 @@ public class MusicalService {
         return musicalRepository.save(musical);
     }
 
+    public Musical UpdateMusical(Musical musical) {
+        return musicalRepository.save(musical);
+    }
+
     public List<Musical> getMusical(Musical musical){
         return  musicalRepository.findAll();
     }
